@@ -1,0 +1,100 @@
+<html>
+<head>
+<title> Assignment 3: Loops and Arrays of Objects</title>
+<style>
+/* This just controls the page layout don't change them! */
+body {
+    margin: 0;
+}    
+#title {
+width: 400px;
+text-align: right;
+margin: 10px;
+}
+#wrapper {
+     width: 900px;
+     margin: 0 auto;
+}
+#leftcolumn, #rightcolumn {
+    border: 1px solid black;
+    float: left;
+    font-family: "Geneva";
+    margin: 10px;
+    padding: 5px;
+    font-size: 13px;
+/*     min-height: 450px; */
+}
+#clickResults, #inputResults {
+font-size: 11px;
+padding: 5px;
+}
+#leftcolumn {
+     width: 400px;
+}
+#rightcolumn {
+     width: 400px;
+}
+</style>
+
+<!-- ####SETTING UP/LOADING THE TEXTS ~~ DO NOT MODIFY#### -->
+<script>
+//TEXT VARIABLES AS GLOBALS
+let text0, text1, text2, text3, text4;
+let textTitles = [];
+</script>
+<!-- LOADING THE TEXTS FROM THE DOCUMENT text.js-->
+<script src="text.js"></script>
+<script>
+//PUTTING THE EACH TEXT INTO AN ARRAY
+//Makes a parallel array for the titles of the texts
+let textArray = [text0, text1, text2, text3, text4];
+let alltexts = []
+//TRANSFORMING THE TEXTS INTO AN ARRAY OF OBJECTS
+for (let i=0; i<textArray.length;i++) {
+     let textObject = {};
+     textObject.title = textTitles[i];
+     textObject.full = textArray[i];
+     textObject.lines = textArray[i].split('\n');
+     alltexts.push(textObject);
+}
+console.log(alltexts);
+</script>
+<!-- LOADING THE FUNCTIONS FROM THE DOCUMENT functions.js-->
+<script src="functions.js"></script>
+
+</head>
+
+<body>
+<!-- THIS IS WHAT WE WILL SEE ON THE SCREEN ~~ DO NOT MODIFY --> 
+<div id="title"><B>Text Search Assignment</B><BR><BR></div>
+<div id="wrapper">
+<!-- THESE ARE THE BUTTONS ON THE LEFT SIDE: USE THE FUNCTION NAMES AFTER onclick="... -->
+<div id="leftcolumn">Enter a search term: <input type="text" id="yourAnswer" value=""><BR>
+<button id="btnSearch" onclick="findWord()">Find lines with this word or phrase</button><BR>
+<button id="btnSearch" onclick="countThisWord()">Count the numbers of lines this word appears in</button><BR>
+<button id="btnSearch" onclick="allTextWords()">Tell me (yes/no) if all 5 texts contain this word</button><BR>
+<button id="btnSearch" onclick="wordCountPerText()">Count how many lines contain this word in each individual text</button><BR>
+<button id="btnSearch" onclick="mostPerText()">Which text contains the most occurrences of this word</button><BR>
+<button id="btnSearch" onclick="containingMultipleWords()">Find lines that contain multiple words</button><BR>
+<div id="inputResults">Input Results will go here</div>
+</div>
+
+<!-- THESE ARE THE BUTTONS ON THE RIGHT SIDE: USE THE FUNCTION NAMES AFTER onclick="... -->
+
+<div id="rightcolumn">Just click these for Results<BR>
+<button id="btnSearch" onclick="firstWord()">Show me the first word in every line</button><BR>
+<button id="btnSearch" onclick="lastWord()">Show me the last word in every line</button><BR>
+<button id="btnSearch" onclick="randomLine()">Show me a random line from each text</button><BR>
+<button id="btnSearch" onclick="randomReverse()">Pick out a random line and reverse the word order for each text</button><BR>
+<button id="btnSearch" onclick="randomLongWord()">Pick out a random line and show me the longest word in it for each text</button><BR>
+<button id="btnSearch" onclick="longestText()">Show me the longest text</button><BR>
+<button id="btnSearch" onclick="averageLineLength()">Show me the average length (by character) for all texts</button><BR>
+<button id="btnSearch" onclick="wordsEndingWithE()">Find all first words that end with "e"</button><BR>
+<div id="clickResults">Click Results will go here</div>
+</div>
+</div>
+
+
+</body>
+</html>
+
