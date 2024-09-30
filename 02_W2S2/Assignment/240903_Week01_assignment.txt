@@ -1,0 +1,347 @@
+ART ONE: WARM-UP (1 POINT)
+A explore the 'economy' table (\d economy) to get familiar with what columns are in there. Do a SELECT * FROM economy; to check out some rows, and press q to get back to the prompt. Then begin:
+
+1) Find the top 10 countries by GDP using: SELECT -- FROM -- ORDER BY -- LIMIT --
+      
+SELECT country, gdp FROM economy ORDER BY gdp DESC NULLS LAST LIMIT 10;
+ country |   gdp    
+---------+----------
+ USA     | 16720000
+ CN      |  9330000
+ J       |  5007000
+ D       |  3593000
+ F       |  2739000
+ GB      |  2490000
+ BR      |  2190000
+ R       |  2113000
+ I       |  2068000
+ CDN     |  1825000
+(10 rows)
+
+2) Get a list of countries with the GDP below 20000 using: SELECT -- FROM -- WHERE --
+
+SELECT country, gdp FROM economy WHERE gdp < 2000;
+ country |  gdp  
+---------+-------
+ RSM     |  1866
+ GBZ     |  1106
+ GAZA    |  1700
+ SOL     |  1099
+ VU      |   828
+ PAL     |   221
+ MP      |   733
+ FSM     |   339
+ MH      |   193
+ NAU     |   100
+ KIR     |   173
+ TUV     |    38
+ TOK     |   1.5
+ WS      |   705
+ AS      | 462.2
+ WF      |    60
+ TO      |   477
+ NU      |    10
+ CK      | 183.2
+ WAG     |   896
+ GUB     |   880
+ LB      |  1977
+ DJI     |  1459
+ CV      |  1955
+ STP     |   311
+ SY      |  1271
+ COM     |   658
+ MYT     | 953.6
+ HELX    |    18
+ SPM     | 215.3
+ BZ      |  1637
+ TUCA    |   216
+ VIRG    |  1200
+ BVI     |  1095
+ AXA     | 175.4
+ SMAR    | 561.5
+ SX      | 794.7
+ KN      |   767
+ AG      |  1220
+ MNTS    |    29
+ WD      |   495
+ WL      |  1377
+ WV      |   742
+ WG      |   811
+ GF      |   800
+ FALK    | 164.5
+(46 rows)
+
+
+
+3) Get a list of countries sorted by the highest rates inflation: SELECT -- FROM -- ORDER BY --
+SELECT country, inflation FROM economy ORDER BY inflation DESC NULLS LAST; 
+country | inflation 
+---------+-----------
+ SYR     |      59.1
+ YV      |      56.2
+ IR      |      42.3
+ SUD     |        25
+ RA      |      20.8
+ BY      |        19
+ WB      |        14
+ ER      |        13
+ MH      |      12.9
+ MW      |      12.2
+ RG      |      11.9
+ YE      |      11.8
+ SLE     |      11.1
+ GH      |        11
+ BHT     |        11
+ UZ      |      10.1
+ IND     |       9.6
+ JA      |       9.4
+ BI      |       9.3
+ ET      |         9
+ TM      |         9
+ ANG     |       8.9
+ RM      |       8.8
+ NGR     |       8.7
+ STP     |       8.7
+ ZW      |       8.5
+ ETH     |       8.4
+ ROU     |       8.3
+ MNG     |       8.2
+ EAT     |       7.8
+ PK      |       7.7
+ RI      |       7.7
+ TR      |       7.6
+ BD      |       7.6
+ CGO     |       7.1
+ Z       |       7.1
+ RCA     |         7
+ KG      |       6.8
+ AFG     |       6.8
+ VN      |       6.8
+ R       |       6.8
+ NEP     |       6.7
+ BOL     |       6.5
+ LAO     |       6.5
+ RH      |       6.3
+ EAU     |       6.2
+
+4) List all countries with the majority of their GDP coming from agriculture: SELECT -- FROM -- WHERE --  (there are different types of criteria for what I am terming "majority," it's up to you to decide on that criteria, and any decision as valid.)
+
+SELECT country, service FROM economy WHERE service > agriculture AND service > industry; 
+country | service 
+---------+---------
+ AL      |    68.5
+ GR      |    80.5
+ CY      |    81.7
+ MK      |    62.3
+ SRB     |    60.3
+ MNE     |    87.9
+ KOS     |    64.5
+ F       |    79.4
+ E       |    70.8
+ CZ      |    60.3
+ SK      |      67
+ D       |      69
+ H       |    68.7
+ I       |    73.5
+
+
+5) Create a list of countries in order of highest unemployment, and join the table with the country table so you get the names of the countries not the country code: SELECT -- FROM -- JOIN - ON -- ORDER BY --
+
+SELECT country.name , economy.unemployment FROM economy 
+JOIN country 
+ON country.code = economy.country
+ORDER BY economy.unemployment 
+DESC NULLS LAST LIMIT 10;
+          name          | unemployment 
+------------------------+--------------
+ Zimbabwe               |           95
+ Nauru                  |           90
+ Liberia                |           85
+ Burkina Faso           |           77
+ Turkmenistan           |           60
+ Djibouti               |           59
+ Congo                  |           53
+ Senegal                |           48
+ Nepal                  |           46
+ Bosnia and Herzegovina |         44.3
+(10 rows)
+
+6) Invent your own query for the economy table--as simple or as complicated as you want it to be.
+mondial=# SELECT country, industry, unemployment FROM economy WHERE unemployment > 50 LIMIT 10; 
+ country | industry | unemployment 
+---------+----------+--------------
+ TM      |     24.4 |           60
+ NAU     |       33 |           90
+ LB      |      5.4 |           85
+ BF      |     23.6 |           77
+ RCB     |     73.9 |           53
+ ZW      |     25.4 |           95
+ DJI     |     17.3 |           59
+(7 rows)
+
+7) Bonus question! List the top 15 countries by the actual dollar amount of their GDP that comes from agriculture (not the percentage but the portion of total GDP in million dollars) where the percent of the agriculture is over 25 percent. Note you will have to do some math with your column values. (1 EXTRA POINT) (Probably best to skip this one and move on to the Part Two if this is at all challenging.)
+
+
+PART TWO: AGGREGATE QUERIES (3 POINTS)
+Do the following for queries using the 'spoken' table.
+
+1) Find the top 10 most dominant languages (highest percentage) in their respective countries. This isn't an aggregate query, use ORDER BY along with other stuff.
+
+SELECT * FROM spoken ORDER BY percentage DESC NULLS LAST LIMIT 10; 
+country |    language     | percentage 
+---------+-----------------+------------
+ FALK    | English         |        100
+ SPM     | French          |        100
+ HELX    | English         |        100
+ CV      | Krioulo         |        100
+ ROK     | Korean          |        100
+ J       | Japanese        |        100
+ PN      | Pitcairn Creole |        100
+ KP      | Korean          |        100
+ GBM     | English         |        100
+ GAZA    | Arabic          |       99.8
+(10 rows)
+
+2) Get a list of the 10 countries with the most languages according to this database. This is an aggregate query. This should have two columns, the country and the number of languages in the country. Hint: you will be using COUNT() and GROUP BY along with other stuff.
+
+SELECT country, count(language) FROM spoken GROUP BY country ORDER BY count(language) DESC LIMIT 10; 
+ country | count 
+---------+-------
+ CN      |    35
+ IND     |    28
+ R       |    27
+ USA     |    27
+ CDN     |    22
+ GB      |    20
+ NGR     |    18
+ CAM     |    16
+ EAT     |    16
+ F       |    16
+(10 rows)
+
+3) Get the same list, but join the country code to the country table so you get the full names of the countries.
+
+SELECT country.name, count(spoken.language) FROM spoken
+JOIN country
+ON country.code = spoken.country
+GROUP BY country.name ORDER BY count(spoken.language) DESC LIMIT 10; 
+      name      | count 
+----------------+-------
+ China          |    35
+ India          |    28
+ United States  |    27
+ Russia         |    27
+ Canada         |    22
+ United Kingdom |    20
+ Nigeria        |    18
+ Cameroon       |    16
+ France         |    16
+ Tanzania       |    16
+(10 rows)
+
+4) Get a list of the 10 languages that are most commonly found from country to country. This should have two columns, the language and the number of countries it appears in.
+
+SELECT language, count(country) FROM spoken GROUP BY language ORDER BY count(country) DESC NULLS LAST LIMIT 10; 
+  language  | count 
+------------+-------
+ English    |    88
+ Arabic     |    56
+ French     |    52
+ Spanish    |    41
+ German     |    26
+ Russian    |    21
+ Portuguese |    20
+ Italian    |    17
+ Turkish    |    16
+ Fulfulde   |    15
+(10 rows)
+
+5) Get a list of the 20 languages that are most commonly found from country to country. This is just like the previous query, except it should have a third column that has 
+the average percentage of the populations that speaks those languages.
+SELECT 
+language, count(country), AVG(percentage) 
+FROM spoken
+GROUP BY language
+ORDER BY count(country) DESC NULLS LAST
+LIMIT 20;
+  language  | count |         avg         
+------------+-------+---------------------
+ English    |    88 | 31.1878125000000000
+ Arabic     |    56 | 29.8173913043478261
+ French     |    52 | 23.7571428571428571
+ Spanish    |    41 | 53.2527777777777778
+ German     |    26 | 13.9926923076923077
+ Russian    |    21 | 16.2761904761904762
+ Portuguese |    20 | 22.0861111111111111
+ Italian    |    17 | 16.9714285714285714
+ Turkish    |    16 |  9.1093750000000000
+ Fulfulde   |    15 | 12.7600000000000000
+ Roma       |    15 |  1.2666666666666667
+ Chinese    |    13 |  2.2615384615384615
+ Filipino   |    11 |  7.4090909090909091
+ Ukrainian  |    11 |  7.0818181818181818
+ Mandarin   |    10 | 14.7800000000000000
+ Berber     |    10 |  9.1714285714285714
+ Romanian   |     9 | 19.7555555555555556
+ Albanian   |     9 | 25.5944444444444444
+ Polish     |     9 | 12.1777777777777778
+ Urdu       |     9 |  2.2722222222222222
+(20 rows)
+
+6) Get a list of the 20 languages that are most commonly found from country to country and their average percentage--
+but only for the countries where those languages are spoken by at least 
+21 percent of the population.
+
+SELECT 
+language, count(country), AVG(percentage) 
+FROM spoken
+WHERE percentage >= 21
+GROUP BY language
+ORDER BY count(country)
+DESC NULLS LAST
+LIMIT 20; 
+    language    | count |         avg          
+----------------+-------+----------------------
+ English        |    25 |  72.7960000000000000
+ Spanish        |    21 |  85.2238095238095238
+ Arabic         |    17 |  76.8117647058823529
+ French         |    10 |  59.0800000000000000
+ Russian        |     5 |  49.2400000000000000
+ Portuguese     |     5 |  65.5600000000000000
+ German         |     4 |  84.2250000000000000
+ Serbo-Croatian |     4 |  92.9000000000000000
+ Albanian       |     3 |  72.8000000000000000
+ Papiamento     |     3 |  74.7666666666666667
+ Malay          |     3 |  73.1000000000000000
+ Fulfulde       |     3 |  25.8000000000000000
+ Italian        |     3 |  70.3333333333333333
+ Dutch          |     3 |  63.3333333333333333
+ Greek          |     3 |  71.0000000000000000
+ Turkish        |     2 |  54.2500000000000000
+ Thai           |     2 |  70.6000000000000000
+ Korean         |     2 | 100.0000000000000000
+ Berber         |     2 |  27.5000000000000000
+ Mandarin       |     2 |  52.9500000000000000
+(20 rows)
+
+7) Finally, modify that last query so that you only get languages that are spoken in more than four countries, but order the results by the highest average percentage of speakers. 
+Hint: you need to use HAVING along with other stuff.
+
+SELECT 
+language, count(country), AVG(percentage) 
+FROM spoken
+WHERE percentage >= 21
+GROUP BY language
+HAVING  count(country) > 4 
+ORDER BY AVG(percentage)
+DESC NULLS LAST
+LIMIT 20; 
+  language  | count |         avg         
+------------+-------+---------------------
+ Spanish    |    21 | 85.2238095238095238
+ Arabic     |    17 | 76.8117647058823529
+ English    |    25 | 72.7960000000000000
+ Portuguese |     5 | 65.5600000000000000
+ French     |    10 | 59.0800000000000000
+ Russian    |     5 | 49.2400000000000000
+(6 rows)

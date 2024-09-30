@@ -1,0 +1,427 @@
+
+1) What 10 countries have the highest population of city dwellers?
+
+     WRONG 
+      SELECT country, name, population FROM city ORDER BY population DESC NULLS LAST LIMIT 10;
+      right 
+
+      
+      SELECT country, SUddM(population)  FROM city GROUP BY country ORDER BY SUM(population) DESC NULLS LAST LIMIT 10; 
+
+ country |    sum    
+---------+-----------
+ CN      | 471208800
+ IND     | 129752758
+ BR      |  93687185
+ USA     |  87902890
+ R       |  76626267
+ J       |  55998885
+ MEX     |  54207883
+ TR      |  53050777
+ PK      |  50920843
+ NGR     |  49410900
+(10 rows)
+
+
+2) What 30 provinces have the highest population of city dwellers?
+
+SELECT province, SUM(population) AS population_sum FROM city GROUP BY province ORDER BY population_sum DESC NULLS LAST LIMIT 30;
+    province     | population_sum 
+------------------+----------------
+ Guangdong        |       75816262
+ Jiangsu          |       44232191
+ Shandong         |       33463642
+ South Korea      |       33175895
+ Zhejiang         |       31152810
+ Punjab           |       30200747
+ Maharashtra      |       28764171
+ Egypt            |       28552889
+ São Paulo        |       28456331
+ Shanghai         |       21909814
+ Henan            |       21743288
+ Sichuan          |       21351058
+ Liaoning         |       19737308
+ Beijing          |       18960744
+ Sindh            |       18154777
+ Hebei            |       17664136
+ California       |       17356178
+ Uttar Pradesh    |       16541711
+ Taiwan           |       16481172
+ Distrito Federal |       16191853
+ Hubei            |       16043592
+ İstanbul         |       15204387
+ Anhui            |       14580738
+ Lagos            |       14248636
+ Hunan            |       13933446
+ Gujarat          |       13756103
+ Rio de Janeiro   |       13215228
+ Moscow           |       13010112
+ Metro Manila     |       12322336
+ Fujian           |       12194537
+(30 rows)
+
+
+
+
+3) Same query, but get the number of cities in each province as well.
+  
+
+
+  SELECT province, SUM(population) AS population_sum, count(name) AS cities_number
+  FROM city GROUP BY province 
+  ORDER BY population_sum 
+  DESC NULLS LAST LIMIT 30;
+
+     province     | population_sum | cities_number 
+------------------+----------------+---------------
+ Guangdong        |       75816262 |            17
+ Jiangsu          |       44232191 |            20
+ Shandong         |       33463642 |            17
+ South Korea      |       33175895 |            23
+ Zhejiang         |       31152810 |            16
+ Punjab           |       30200747 |            24
+ Maharashtra      |       28764171 |            14
+ Egypt            |       28552889 |            28
+ São Paulo        |       28456331 |            57
+ Shanghai         |       21909814 |             1
+ Henan            |       21743288 |            15
+ Sichuan          |       21351058 |             8
+ Liaoning         |       19737308 |            10
+ Beijing          |       18960744 |             1
+ Sindh            |       18154777 |             6
+ Hebei            |       17664136 |             9
+ California       |       17356178 |            52
+ Uttar Pradesh    |       16541711 |            14
+ Taiwan           |       16481172 |            14
+ Distrito Federal |       16191853 |             4
+ Hubei            |       16043592 |             6
+ İstanbul         |       15204387 |             1
+ Anhui            |       14580738 |            10
+ Lagos            |       14248636 |             4
+ Hunan            |       13933446 |             9
+ Gujarat          |       13756103 |             8
+ Rio de Janeiro   |       13215228 |            21
+ Moscow           |       13010112 |             1
+ Metro Manila     |       12322336 |            14
+ Fujian           |       12194537 |             5
+(30 rows)
+
+
+4) Same query, but only show the provinces that have more than one city.
+
+      SELECT province, SUM(population) AS population_sum, count(name) AS cities_number
+      FROM city 
+      GROUP BY province 
+      HAVING count(name) > 1
+      ORDER BY population_sum 
+      DESC NULLS LAST LIMIT 30;
+      
+     province     | population_sum | cities_number 
+------------------+----------------+---------------
+ Guangdong        |       75816262 |            17
+ Jiangsu          |       44232191 |            20
+ Shandong         |       33463642 |            17
+ South Korea      |       33175895 |            23
+ Zhejiang         |       31152810 |            16
+ Punjab           |       30200747 |            24
+ Maharashtra      |       28764171 |            14
+ Egypt            |       28552889 |            28
+ São Paulo        |       28456331 |            57
+ Henan            |       21743288 |            15
+ Sichuan          |       21351058 |             8
+ Liaoning         |       19737308 |            10
+ Sindh            |       18154777 |             6
+ Hebei            |       17664136 |             9
+ California       |       17356178 |            52
+ Uttar Pradesh    |       16541711 |            14
+ Taiwan           |       16481172 |            14
+ Distrito Federal |       16191853 |             4
+ Hubei            |       16043592 |             6
+ Anhui            |       14580738 |            10
+ Lagos            |       14248636 |             4
+ Hunan            |       13933446 |             9
+ Gujarat          |       13756103 |             8
+ Rio de Janeiro   |       13215228 |            21
+ Metro Manila     |       12322336 |            14
+ Fujian           |       12194537 |             5
+ Gauteng          |       11719557 |             5
+ Texas            |       11439542 |            25
+ Dhaka            |       11338412 |             4
+ Thailand         |       11325984 |            11
+(30 rows)
+
+
+5) Same query, but make sure you are only aggregating cities whose population values are not null. 
+   You can test for this by using "IS NOT NULL" (your resulting table will be slightly different than the one before.)
+
+      SELECT province, SUM(population) AS population_sum, count(name) AS cities_number
+      FROM city
+      WHERE population IS NOT NULL
+      GROUP BY province 
+      HAVING count(name) > 1
+      ORDER BY population_sum 
+      DESC NULLS LAST LIMIT 30;
+
+         province     | population_sum | cities_number 
+------------------+----------------+---------------
+ Guangdong        |       75816262 |            17
+ Jiangsu          |       44232191 |            20
+ Shandong         |       33463642 |            17
+ South Korea      |       33175895 |            23
+ Zhejiang         |       31152810 |            16
+ Punjab           |       30200747 |            24
+ Maharashtra      |       28764171 |            14
+ Egypt            |       28552889 |            28
+ São Paulo        |       28456331 |            57
+ Henan            |       21743288 |            15
+ Sichuan          |       21351058 |             8
+ Liaoning         |       19737308 |            10
+ Sindh            |       18154777 |             6
+ Hebei            |       17664136 |             9
+ California       |       17356178 |            52
+ Uttar Pradesh    |       16541711 |            14
+ Taiwan           |       16481172 |            14
+ Distrito Federal |       16191853 |             4
+ Hubei            |       16043592 |             6
+ Anhui            |       14580738 |            10
+ Lagos            |       14248636 |             4
+ Hunan            |       13933446 |             9
+ Gujarat          |       13756103 |             6
+ Rio de Janeiro   |       13215228 |            21
+ Metro Manila     |       12322336 |            14
+ Fujian           |       12194537 |             5
+ Gauteng          |       11719557 |             5
+ Texas            |       11439542 |            25
+ Dhaka            |       11338412 |             4
+ Thailand         |       11325984 |            11
+(30 rows
+ 
+
+
+
+6) Which provinces exist across multiple countries. (New thing here: you need to do count(distinct ))
+
+
+
+
+
+
+
+
+      SELECT province, COUNT(distinct country)
+      FROM city 
+      GROUP BY province 
+      HAVING (COUNT(distinct country)) > 1;
+
+           province     | count 
+------------------+-------
+ Amazonas         |     4
+ Distrito Federal |     4
+ Western          |     3
+ Central          |     3
+ Eastern          |     3
+ Northern         |     3
+ Sucre            |     2
+ Georgia          |     2
+ La Paz           |     2
+ La Rioja         |     2
+ Lagos            |     2
+ Limburg          |     2
+ Luxembourg       |     2
+ Bolívar          |     2
+ Punjab           |     2
+ Santa Cruz       |     2
+ Southern         |     2
+ Córdoba          |     2
+ Colón            |     2
+(19 rows)
+
+7) Redo query 5 so that you are only counting provinces that are in the same country. (Big hint you need to GROUP BY two things!)
+
+      SELECT province, SUM(population) AS population_sum, count(name) AS cities_number
+      FROM city
+      WHERE population IS NOT NULL
+      GROUP BY province, country
+      HAVING count(name) > 1
+      ORDER BY population_sum 
+      DESC NULLS LAST LIMIT 30;
+
+    province    | population_sum | cities_number 
+----------------+----------------+---------------
+ Guangdong      |       75816262 |            17
+ Jiangsu        |       44232191 |            20
+ Shandong       |       33463642 |            17
+ South Korea    |       33175895 |            23
+ Zhejiang       |       31152810 |            16
+ Maharashtra    |       28764171 |            14
+ Egypt          |       28552889 |            28
+ São Paulo      |       28456331 |            57
+ Punjab         |       26939975 |            21
+ Henan          |       21743288 |            15
+ Sichuan        |       21351058 |             8
+ Liaoning       |       19737308 |            10
+ Sindh          |       18154777 |             6
+ Hebei          |       17664136 |             9
+ California     |       17356178 |            52
+ Uttar Pradesh  |       16541711 |            14
+ Taiwan         |       16481172 |            14
+ Hubei          |       16043592 |             6
+ Anhui          |       14580738 |            10
+ Hunan          |       13933446 |             9
+ Lagos          |       13929674 |             2
+ Gujarat        |       13756103 |             6
+ Rio de Janeiro |       13215228 |            21
+ Metro Manila   |       12322336 |            14
+ Fujian         |       12194537 |             5
+ Gauteng        |       11719557 |             5
+ Texas          |       11439542 |            25
+ Dhaka          |       11338412 |             4
+ Thailand       |       11325984 |            11
+ Shaanxi        |       11275702 |             3
+(30 rows)
+
+
+
+1) Find the 20 countries with the highest number of ethnic groups along with the type of government for each of those countries.
+     
+      SELECT EthnicGroup.country, count(EthnicGroup.name) AS ethnicgroup_num, politics.government 
+      FROM EthnicGroup
+      JOIN politics
+      ON politics.country = EthnicGroup.country
+      GROUP BY EthnicGroup.country, politics.government 
+      ORDER BY ethnicgroup_num
+      DESC NULLS LAST 
+      LIMIT 20;
+     
+      country | ethnicgroup_num |                               government                               
+---------+-----------------+------------------------------------------------------------------------
+ CN      |              28 | Socialist republic
+ R       |              27 | federation
+ USA     |              25 | constitution-based federal republic; strong democratic tradition
+ IND     |              20 | federal republic
+ NGR     |              17 | federal republic
+ VN      |              16 | Communist state
+ CDN     |              16 | a parliamentary democracy, a federation, and a constitutional monarchy
+ LAO     |              15 | Communist state
+ CAM     |              15 | republic; multiparty presidential regime
+ MYA     |              15 | parliamentary government took power in March 2011
+ EAT     |              14 | republic
+ RMM     |              14 | republic
+ CI      |              13 | republic; multiparty presidential regime established 1960
+ LB      |              13 | republic
+ EAK     |              13 | republic
+ THA     |              12 | constitutional monarchy
+ D       |              12 | federal republic
+ EAU     |              12 | republic
+ GH      |              12 | constitutional democracy
+ Z       |              11 | republic
+(20 rows)
+     
+
+2) Which country has the greatest number of borders with other countries.
+
+      SELECT country.name, count(borders.country1) FROM borders 
+      JOIN country
+      ON country.code = borders.country1 OR country.code = borders.country2
+      GROUP BY country1, country.name
+      ORDER BY count DESC LIMIT 10;
+
+       name  | count 
+-------+-------
+ China |    14
+
+3) What are the 15 tallest mountains in Africa
+   
+      SELECT
+      mountain.name AS mountain_name,
+      encompasses.continent AS continent,
+      mountain.elevation AS mountain_elevation
+      FROM geo_Mountain 
+      JOIN mountain 
+      ON mountain.name = geo_Mountain.mountain
+      JOIN encompasses
+      ON encompasses.country = geo_Mountain.country
+      WHERE encompasses.continent = 'Africa'
+      ORDER BY mountain.elevation 
+      DESC NULLS LAST 
+      LIMIT 15; 
+
+      //this should've had distinct to remove du
+      SELECT DISTINCT 
+      mountain.name AS mountain_name,
+      encompasses.continent AS continent,
+      mountain.elevation AS mountain_elevation
+      FROM geo_Mountain 
+      JOIN mountain 
+      ON mountain.name = geo_Mountain.mountain
+      JOIN encompasses
+      ON encompasses.country = geo_Mountain.country
+      WHERE encompasses.continent = 'Africa'
+      ORDER BY mountain.elevation 
+      DESC NULLS LAST 
+      LIMIT 15; 
+
+
+   mountain_name   | continent | mountain_elevation 
+-------------------+-----------+--------------------
+ Kilimanjaro       | Africa    |               5895
+ Mt. Kenia         | Africa    |               5199
+ Mawenzi           | Africa    |               5148
+ Mt. Stanley       | Africa    |               5109
+ Meru              | Africa    |               4567
+ Ras Dashen        | Africa    |               4533
+ Karisimbi         | Africa    |               4507
+ Tullu Dimtu       | Africa    |               4389
+ Elgon             | Africa    |               4321
+ Tubkhal           | Africa    |               4167
+ Fako              | Africa    |               4095
+ Thabana Ntlenyana | Africa    |               3482
+ Emi Kussi         | Africa    |               3445
+ Kinyeti           | Africa    |               3187
+ Cathkin Peak      | Africa    |               3181
+(15 rows)
+
+4) What are the biggest ethnic groups in the world in terms of absolute numbers.
+
+
+5) What is the predominant religion in each of the 10 most populous countries in Asia.
+
+    
+
+
+WITH top_reli AS (SELECT country, MAX(percentage) as maxper FROM religion GROUP BY country)
+SELECT top_reli.maxper, top_reli.country, religion.name, encompasses.continent, country.name, country.population
+FROM religion
+JOIN top_reli ON top_reli.maxper = religion.percentage AND top_reli.country = religion.country
+JOIN country ON top_reli.country = country.code
+JOIN encompasses ON top_reli.country = encompasses.country
+WHERE encompasses.continent = 'Asia'
+ORDER BY country.population DESC
+
+    
+   country   |      religion_name       | religion_percentage | population 
+-------------+--------------------------+---------------------+------------
+ China       | Buddhist                 |                  16 | 1411778724
+ India       | Hindu                    |                79.8 | 1210854977
+ Indonesia   | Muslim                   |                  87 |  270203917
+ Pakistan    | Muslim                   |                  97 |  207776954
+ Bangladesh  | Muslim                   |                90.9 |  165158616
+ Russia      | Christian Orthodox       |                42.7 |  144699673
+ Japan       | Buddhist                 |                  35 |  126146099
+ Philippines | Catholic                 |                80.6 |  109035343
+ Vietnam     | Vietnamese Folk Religion |                45.3 |   96208984
+ Egypt       | Muslim                   |                  90 |   94798827
+(10 rows)
+
+6) Which continent has the most rivers?
+
+
+7) Which 20 cities have experienced the highest population growth from 1990 to 2010 (for cities with that data).
+
+8) Top 10 rivers that flow through the most provinces in Europe.
+
+9) The GDP of the most populous country on each continent.
+
+10) Languages shared across borders (list the language and the two countries it goes across)
+
+(It may be helpful to read through the mondial schema Download mondial schemato figure out what tables you need to use.)

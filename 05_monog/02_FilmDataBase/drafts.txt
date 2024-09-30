@@ -1,0 +1,6 @@
+1. import the dataset to my monogodb Database 
+mongoimport --username alsan632 --password 2k6dcHBbHgmWNZYO --uri="mongodb+srv://alsan632:2k6dcHBbHgmWNZYO@datastructurecluster.mvalz.mongodb.net/datastructures"  --collection=moviestv  --jsonArray --type json --file=amazon_moviestv.json
+
+2. my shell connection  
+mongosh "mongodb+srv://datastructurecluster.mvalz.mongodb.net/datastructures" --apiVersion 1 --username alsan632
+

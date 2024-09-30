@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Creating a Human Object.</p>
+
+<p id="demo"></p>
+
+<script>
+
+let gameCharacter = {
+    name: "Prince of Persia",
+    realName: "Unknown",
+    age: 25,
+    bdate : "10/25/1710",
+    gender: "Male",
+    height: "185 cm",
+    weight: "80 kg",
+    hairColor: "Black",
+    eyeColor: "Brown",
+    nationality: "Persian",
+    title: "Prince",
+    weapon: "Sword",
+    secondaryWeapon: "Dagger",
+    armor: "Light Armor",
+    strength: 8,
+    intelligence: 7,
+    health: 100,
+    abilitiesStageOne: ["Wall Running", "Sword Fighting", "Acrobatics"],
+    abilitiesBetterStage: ["Time Manipulation", "Enhanced Strength", "Advanced Sword Fighting"],
+    allies: ["Farah", "Elika"],
+    enemies: ["Vizier", "Sand Creatures"],
+    kingdom: "Persia",
+    mission: "Save the kingdom from the evil",
+    backstory: "The Prince is a noble warrior who fights to protect his kingdom from dark forces.",
+    gameCharacterality: "Brave, Determined, Loyal",
+    favoriteQuote: "Most people think time is like a river that flows swift and sure in one direction.",
+    favoriteFood: "Pizza",
+    favoriteHobby: "Collecting ancient artifacts",
+    talent: "Can juggle swords",
+    biggestFear: "Running out of sand",
+    favoriteAnimal: "Camel",
+    OnWeekEnds: ["Trains with his sword","goes to see the princes", "goes to the market"]
+};
+console.log(gameCharacter);
+
+
+// edit the sentence/paragraph to include 15+ properties
+document.getElementById("demo").innerHTML =
+    gameCharacter.name + " is a " + gameCharacter.age + " year old " + gameCharacter.gender + " from " + gameCharacter.kingdom + ". " +
+    "He stands " + gameCharacter.height + " tall and weighs " + gameCharacter.weight + ". " +
+    "With his " + gameCharacter.hairColor + " hair and " + gameCharacter.eyeColor + " eyes, he is quite the sight. " +
+    "Known as the " + gameCharacter.title + ", he wields a " + gameCharacter.weapon + " and a " + gameCharacter.secondaryWeapon + ". " +
+    "His abilities include " + gameCharacter.abilitiesStageOne[0] + ", " + gameCharacter.abilitiesStageOne[1] + ", and " + gameCharacter.abilitiesStageOne[2] + ". " +
+    "On weekends, he enjoys " + gameCharacter.OnWeekEnds[0] + ", " + gameCharacter.OnWeekEnds[1] + ", and " + gameCharacter.OnWeekEnds[2] + ". " +
+    "His favorite food is " + gameCharacter.favoriteFood + " and he loves " + gameCharacter.favoriteHobby + ". " +
+    "Despite his bravery, his biggest fear is " + gameCharacter.biggestFear + ". " +
+    "He is often seen with his allies " + gameCharacter.allies[0] + " and " + gameCharacter.allies[1] + " and fights against " + gameCharacter.enemies[0] + " and " + gameCharacter.enemies[1] + ". " +
+    "His favorite quote is: '" + gameCharacter.favoriteQuote + "'.";
+
+// you can make a paragraph, you can reverse engineer a description, you can reverse engineer a Google knowledge graph.
+
+
+// this is just a function that converts birthdates to age. This conversion requires a specific date format: MM/DD/YYYY
+function getAge(bday){
+	let myDate = bday.split("/");
+	let born = new Date(myDate[2], myDate[0] - 1, myDate[1]);
+	let today = new Date()
+    let yearAge = today.getFullYear()-born.getFullYear()
+    if (today.getMonth() < born.getMonth()) {yearAge--}
+    else if (today.getMonth() == born.getMonth() && today.getDate() <born.getDate()) {yearAge--}
+   return yearAge;
+}
+
+
+</script>
+
+</body>
+</html>
