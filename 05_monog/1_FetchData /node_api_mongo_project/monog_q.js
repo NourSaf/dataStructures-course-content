@@ -1,5 +1,5 @@
 //connects you to the collection
-use "name of the collection "
+// use "name of the collection "
 
 //find a book in the colleciton 
 db.books.findOne() 
