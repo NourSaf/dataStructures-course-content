@@ -1,14 +1,12 @@
-/*_______________________________________________________________
 
-FIND 
-________________________________________________________________*/
 
-const { any } = require("@amcharts/amcharts5/.internal/core/util/Array")
+// ––––––> FIND 
 
-/* 
-    01. find The 10 most popular movies or TV shows.
-    Your results should display only the title, genres, and popularity score.
-*/
+/* ____________________________________________________________________________________
+
+01. find The 10 most popular movies or TV shows.
+Your results should display only the title, genres, and popularity score.
+____________________________________________________________________________________*/
 db.moviestv.find(
     {
        $or: [
@@ -16,16 +14,15 @@ db.moviestv.find(
         {"type": /movie/i}
        ] 
     },
-    {
-        title: 1, 
-        genres: 1, 
-        tmdb_popularity: 1,
-        _id:0 
+    {   
+        title: 1,  genres: 1, tmdb_popularity: 1, _id:0 
     }
 ).sort({"tmdb_popularity": -1}).limit(10)
 
-//
-answer = [
+/*
+–––––> RESULTS
+*/
+result = [
     {
       title: 'Clifford the Big Red Dog',
       genres: [ 'Kids' ],
@@ -75,9 +72,13 @@ answer = [
   ]
 
 
-/* 
-    02.  Same query, for the most popular dramas
-*/
+
+
+
+/*____________________________________________________________________________________
+
+02.  Same query, for the most popular dramas
+____________________________________________________________________________________*/
 db.moviestv.find(
     {
         $and: [
@@ -86,13 +87,70 @@ db.moviestv.find(
         ]
     },
     {
-        title: 1, 
-        genres: 1, 
-        tmdb_popularity: 1,
-        _id:0 
+        title: 1, genres: 1, tmdb_popularity: 1, _id:0 
     }
 ).sort({"tmdb_popularity": -1}).limit(10)
 
+/*
+–––––> RESULTS
+*/
+result = [
+    {
+      title: 'The Wheel of Time',
+      genres: [ 'Adventure', 'Drama', 'Fantasy' ],
+      tmdb_popularity: 249.867
+    },
+    { title: 'Carriers', genres: [ 'Drama' ], tmdb_popularity: 134.478 },
+    {
+      title: "The Pilgrim's Progress",
+      genres: [ 'Animation', 'Drama', 'Kids' ],
+      tmdb_popularity: 108.079
+    },
+    {
+      title: 'The Voyeurs',
+      genres: [ 'Drama', 'Young Adult Audience' ],
+      tmdb_popularity: 101.002
+    },
+    {
+      title: 'The Boarding School: Las Cumbres',
+      genres: [ 'Drama', 'Suspense' ],
+      tmdb_popularity: 100.986
+    },
+    {
+      title: 'Boys Over Flowers',
+      genres: [ 'Comedy', 'Drama', 'Romance' ],
+      tmdb_popularity: 75.209
+    },
+    {
+      title: 'The Mad Hatter',
+      genres: [ 'Drama', 'Horror', 'Suspense' ],
+      tmdb_popularity: 72.809
+    },
+    {
+      title: 'The Wilds',
+      genres: [ 'Drama', 'Suspense', 'Young Adult Audience' ],
+      tmdb_popularity: 62.156
+    },
+    {
+      title: 'Finding Grace',
+      genres: [ 'Drama', 'Kids', 'Special Interest' ],
+      tmdb_popularity: 60.996
+    },
+    {
+      title: 'Solos',
+      genres: [ 'Drama', 'Fantasy', 'Science Fiction' ],
+      tmdb_popularity: 58.248
+    }
+  ]
+
+
+
+
+/*____________________________________________________________________________________
+
+03. Same query, but find movies or tv shows that are only tagged with 
+the genre "drama" and no other tags
+____________________________________________________________________________________*/
 
 db.moviestv.find(
     {
@@ -103,14 +161,16 @@ db.moviestv.find(
         ]
     },
     {
-        title: 1, 
-        genres: 1, 
+        title: 1, genres: 1, 
         tmdb_popularity: 1,
         _id:0 
     }
 ).sort({"tmdb_popularity": -1}).limit(10)
 
-answer = [
+/*
+–––––> RESULTS
+*/
+reslut = [
     { title: 'Carriers', genres: [ 'Drama' ], tmdb_popularity: 134.478 },
     {
       title: 'The Untamed',
@@ -155,11 +215,16 @@ answer = [
     }
   ]
 
-/*
-    04. same query, but find movies that are tagged either 
-    comedy or drama (or both and they can also 
-    contain other additional genres)
-*/
+
+
+
+
+/*___________________________________________________________________________________
+
+04. same query, but find movies that are tagged either 
+   comedy or drama (or both and they can also 
+   contain other additional genres)
+___________________________________________________________________________________*/
 db.moviestv.find(
     {
         $and: [
@@ -175,7 +240,10 @@ db.moviestv.find(
     }
 ).sort({"tmdb_popularity": -1}).limit(10)
 
-answer = [
+/*
+–––––> RESULTS
+*/
+reslut = [
     {
       title: 'The Tomorrow War',
       genres: [ 'Action', 'Adventure', 'Comedy' ],
@@ -225,10 +293,14 @@ answer = [
   ]
 
 
-/*
-05.
-Same query, genres that contain both comedy and drama (and, also anything else)
-*/
+
+
+
+/*____________________________________________________________________________________
+
+05. Same query, genres that contain both comedy and drama (and, also anything else)
+______________________________________________________________________________________*/
+
 db.moviestv.find(
     {
         $and: [
@@ -241,7 +313,10 @@ db.moviestv.find(
     }
 ).sort({tmdb_popularity: -1}).limit(10)
 
-answer = [
+/*
+–––––> RESULTS
+*/
+reslut = [
     {
       title: 'All About Sex',
       genres: [ 'Comedy', 'Drama' ],
@@ -295,10 +370,13 @@ answer = [
   ]
 
 
-/*
-06.
-Same query, genres that contain comedy not drama (but any other genre is ok)
-*/
+
+
+
+/*______________________________________________________________________________________
+
+06. Same query, genres that contain comedy not drama (but any other genre is ok)
+______________________________________________________________________________________*/
 db.moviestv.find(
     {
         $and: [
@@ -311,7 +389,10 @@ db.moviestv.find(
     }
 ).sort({tmdb_popularity: -1}).limit(10)
 
-answer = [
+/*
+–––––> RESULTS
+*/
+reslut = [
     {
       title: 'The Tomorrow War',
       genres: [ 'Action', 'Adventure', 'Comedy' ],
@@ -364,10 +445,15 @@ answer = [
     }
   ]
 
-/*
-07. 
-The 10 longest movies. Your results should Display only the title, genres, directors and runtime.
-*/
+
+
+
+
+
+/*______________________________________________________________________________________
+
+07. The 10 longest movies. Your results should Display only the title, genres, directors and runtime.
+______________________________________________________________________________________*/
 db.moviestv.find(
     {
         "type":/movie/i
@@ -378,7 +464,10 @@ db.moviestv.find(
 
 ).sort({'runtime': -1}).limit(10)
 
-answer = [
+/*
+–––––> RESULTS
+*/
+reslut = [
     {
       title: 'Kabhi Khushi Kabhie Gham',
       runtime: 209,
@@ -441,10 +530,15 @@ answer = [
     }
   ]
 
-/*
-8.
-Same thing, but longest movies made in the US
-*/
+
+
+
+
+
+/*______________________________________________________________________________________
+
+8. Same thing, but longest movies made in the US
+______________________________________________________________________________________*/
 db.moviestv.find(
     {
         $and: [
@@ -459,6 +553,9 @@ db.moviestv.find(
     }
 ).sort({"runtime": -1}).limit(10)
 
+/*
+–––––> RESULTS
+*/
 answer = [
     {
       title: 'The Key to Rebecca',
@@ -532,11 +629,16 @@ answer = [
     }
   ]
 
-/*  
-09.
-Same thing, but longest movies made before this century (from the US) 
+
+
+
+
+
+/*______________________________________________________________________________________
+
+09.Same thing, but longest movies made before this century (from the US) 
 this century range 2001 - 2100
-*/
+______________________________________________________________________________________*/
 db.moviestv.find(
     {
         $and:[
@@ -552,6 +654,9 @@ db.moviestv.find(
     }
 ).sort({"runtime": -1}).limit(10)
 
+/*
+–––––> RESULTS
+*/
 answer = [
     {
       title: 'The Key to Rebecca',
@@ -634,11 +739,17 @@ answer = [
       directors: [ 'John Ford' ]
     }]  
 
-/*
-10.
-Same thing, but longest movies made before this century that were produced in the US and GB 
-(great britian) (additional countries are ok to include)
-*/
+
+
+
+
+
+/*______________________________________________________________________________________
+
+10.Same thing, but longest movies made before this century 
+that were produced in the US and GB (great britian) 
+(additional countries are ok to include)
+______________________________________________________________________________________*/
 
 db.moviestv.find(
     {
@@ -654,6 +765,9 @@ db.moviestv.find(
     }
 ).sort({"runtime": -1}).limit(10)
 
+/*
+–––––> RESULTS
+*/
 answer = [
     {
       title: 'Diana: Her True Story',
@@ -721,10 +835,14 @@ answer = [
     }
   ]
 
-/*
-11.
-10 most popular TV shows from either JP, CN, or KR
-*/
+
+
+
+
+/*______________________________________________________________________________________
+
+11. 10 most popular TV shows from either JP, CN, or KR
+______________________________________________________________________________________*/
 
 
 db.moviestv.find(
@@ -740,6 +858,9 @@ db.moviestv.find(
     }
 ).sort({"tmdb_popularity": -1}).limit(10)
 
+/*
+–––––> RESULTS
+*/
 answer = [
     {
       title: 'Boys Over Flowers',
@@ -803,12 +924,16 @@ answer = [
     }
   ]
 
-/*
-12.
-10 movies from that have multiple production 
+
+
+
+
+/*______________________________________________________________________________________
+
+12. 10 movies from that have multiple production 
 countries by the highest IMDB score. 
 Show title, genres, directors, production countries, and score
-*/
+______________________________________________________________________________________*/
 
 db.moviestv.find(
     {
@@ -822,6 +947,9 @@ db.moviestv.find(
     }
 ).sort({"imdb_score": -1}).limit(10)
 
+/*
+–––––> RESULTS
+*/
 answer = [
     {
       title: 'Mambo Man',
@@ -896,17 +1024,25 @@ answer = [
   ]
 
 
-/*_______________________________________________________________
 
-AGREEGATIONS 
-________________________________________________________________*/
 
-/*
+
+
+/*______________________________________________________________________________________________________________________________
+
+                        AGREEGATIONS 
+________________________________________________________________________________________________________________________________*/
+
+/*______________________________________________________________________________________
+
 01. List the 10 directors who have the most movies in the database this century.
-*/
+______________________________________________________________________________________*/
 
 db.moviestv.aggregate(
-    [
+    [   
+        {
+            $unwind: "$directors"
+        },
         {
             $match: {
                 "type": /movie/i,
@@ -925,7 +1061,14 @@ db.moviestv.aggregate(
             $limit: 10 
         }
     ])
-answer= [
+
+/*
+–––––> RESULTS
+movies some movies has more than one director 
+usning unwind makes it fair to clac the results
+*/
+
+noUnwindResult = [
     { _id: [ 'Jay Chapman' ], totalMovies: 24 },
     { _id: [ 'Manny Rodriguez' ], totalMovies: 12 },
     { _id: [ 'Brian Volk-Weiss' ], totalMovies: 10 },
@@ -938,9 +1081,28 @@ answer= [
     { _id: [ 'Michael Feifer' ], totalMovies: 4 }
   ]
 
-/* 
+unwindeResult = [
+    { _id: 'Jay Chapman', totalMovies: 24 },
+    { _id: 'Brian Volk-Weiss', totalMovies: 12 },
+    { _id: 'Manny Rodriguez', totalMovies: 12 },
+    { _id: 'Jay Karas', totalMovies: 6 },
+    { _id: 'John Asher', totalMovies: 6 },
+    { _id: 'Anthony C. Ferrante', totalMovies: 6 },
+    { _id: 'Craig Moss', totalMovies: 5 },
+    { _id: 'Lakshmy Ramakrishnan', totalMovies: 4 },
+    { _id: 'Steven T. Shippy', totalMovies: 4 },
+    { _id: 'Michael Feifer', totalMovies: 4 }
+  ]
+
+
+
+
+
+
+/* ________________________________________________________________________
+
 02. List the ten years with the most tv shows
-*/
+___________________________________________________________________________*/
 
 db.moviestv.aggregate(
     [
@@ -961,6 +1123,9 @@ db.moviestv.aggregate(
     ]
 )
 
+/*
+–––––> RESULTS
+*/
 answer = [
     { _id: 2021, TV_SHOWS: 73 },
     { _id: 2020, TV_SHOWS: 67 },
@@ -975,9 +1140,14 @@ answer = [
   ]
 
 
-/* 
+
+
+
+
+/* _______________________________________________________________________
+
 03. List the ten years in the 20th century with the most movies
-*/
+________________________________________________________________________*/
 
 db.moviestv.aggregate(
     [
@@ -1001,6 +1171,9 @@ db.moviestv.aggregate(
     ]
 )
 
+/*
+–––––> RESULTS
+*/
 answer = [
     { _id: 1996, MOVIES: 28 },
     { _id: 1994, MOVIES: 25 },
@@ -1015,9 +1188,14 @@ answer = [
   ]
 
 
-/* 
+
+
+
+
+/* _______________________________________________________________________
+
 04. Top ten years for movies by average imdb score
-*/
+________________________________________________________________________*/
 
 db.moviestv.aggregate(
     [
@@ -1042,6 +1220,9 @@ db.moviestv.aggregate(
     ]
 )
 
+/*
+–––––> RESULTS
+*/
 answer = [
     { _id: 1927, AVG_imdb_score: 7 },
     { _id: 1982, AVG_imdb_score: 6.733333333333333 },
@@ -1056,10 +1237,14 @@ answer = [
   ]
 
 
-/* 
+
+
+
+/* _______________________________________________________________________
+
 05. More challenging: same query but Only show years that had 10 
 or more movies (you will need to use match twice in the pipeline)
-*/
+_______________________________________________________________________*/
 
 db.moviestv.aggregate(
     [
@@ -1091,6 +1276,9 @@ db.moviestv.aggregate(
     ]
 )
 
+/*
+–––––> RESULTS
+*/
 answer = [
     { _id: 1981, totalMovies: 11, AVG_imdb_score: 6.63 },
     { _id: 1978, totalMovies: 10, AVG_imdb_score: 6.6 },
@@ -1104,11 +1292,18 @@ answer = [
     { _id: 1995, totalMovies: 21, AVG_imdb_score: 6.166666666666667 }
   ]
 
-/*
+
+
+
+
+
+
+/*_______________________________________________________________________
+
 06. More challenging (and new): 
 list the genres with the most movies in the database 
 (note: genres are in arrays, you will need to use $unwind)
-*/
+_______________________________________________________________________*/
 
 db.moviestv.aggregate(
     [
@@ -1118,6 +1313,9 @@ db.moviestv.aggregate(
     ]
 )
 
+/*
+–––––> RESULTS
+*/
 answer = [
     { _id: 'Drama', genresCount: 1494 },
     { _id: 'Comedy', genresCount: 841 },
@@ -1141,9 +1339,15 @@ answer = [
     { _id: 'Young Adult Audience', genresCount: 33 }
   ]
 
-/* 
+
+
+
+
+
+/* _______________________________________________________________________
+
 07. Similar: list the 10 cast member in the most movies in the database
-*/
+_______________________________________________________________________*/
 
 db.moviestv.aggregate(
     [
@@ -1154,6 +1358,9 @@ db.moviestv.aggregate(
     ]
 )
 
+/*
+–––––> RESULTS
+*/
 answer = [
     { _id: 'Gene Autry', CastCount: 16 },
     { _id: 'Champion', CastCount: 15 },
