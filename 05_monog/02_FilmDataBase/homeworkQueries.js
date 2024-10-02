@@ -1307,6 +1307,7 @@ _______________________________________________________________________*/
 
 db.moviestv.aggregate(
     [
+        {$match:{"type":/movie/i}},
         {$unwind: "$genres"},
         {$group: {_id: "$genres", genresCount:{$sum: 1}}},
         {$sort: {"genresCount": -1}}
@@ -1357,7 +1358,6 @@ db.moviestv.aggregate(
         {$limit: 10}
     ]
 )
-
 /*
 –––––> RESULTS
 */
